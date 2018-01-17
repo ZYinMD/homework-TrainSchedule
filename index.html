@@ -4,19 +4,115 @@
 <head>
   <!-- Put this line first, so the title can be rendered correctly -->
   <meta charset="utf-8">
-  <!-- Commonly required meta tags -->
-  <title>Train Schedule Homework</title>
+
+  <!-- Title -->
+  <title></title>
+
+  <!--Let browser know page is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Your own script -->
+  <!-- Materialize JS, needs jQuery first -->
+  <script defer src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.3/js/materialize.min.js"></script>
+
+  <!-- moment.js -->
+  <script defer src="moment.js"></script>
+
+  <!-- firebase js -->
+  <script defer src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+
+  <!-- my own js -->
   <script defer src="app.js"></script>
+
+  <!-- Materialize stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.3/css/materialize.min.css">
 
   <!-- Your own stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <main class="container">
 
+    <div class="row">
+      <h1>Platform Z37 - Timetable</h1>
+      <table class="bordered highlight">
+        <thead>
+          <tr>
+            <th>Train Name</th>
+            <th>Destination</th>
+            <th>Frequency</th>
+            <th>Next Arrival</th>
+            <th>Time Away</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Southern Dream</td>
+            <td>Australia</td>
+            <td>9m</td>
+            <td>11:11</td>
+            <td>9d</td>
+          </tr>
+          <tr>
+            <td>Furikake</td>
+            <td>Japan</td>
+            <td>10m</td>
+            <td>11:12</td>
+            <td>13d</td>
+          </tr>
+          <tr>
+            <td>Breakaway</td>
+            <td>Iceland</td>
+            <td>14m</td>
+            <td>11:12</td>
+            <td>12d</td>
+          </tr>
+          <tr>
+            <td>Lightning Bolt</td>
+            <td>Jupiter</td>
+            <td>13m</td>
+            <td>11:13</td>
+            <td>10d</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col m6">
+            <label for="input-train-name">Train Name</label>
+            <input id="input-train-name" type="text" class="validate">
+          </div>
+          <div class="input-field col m6">
+            <label for="input-destination">Destination</label>
+            <input id="input-destination" type="text" class="validate">
+          </div>
+          <div class="col m12">
+            <span>Frequency: This train will run every</span>
+            <div class="input-field inline">
+              <!-- <label for="input-frequency-hours">hours</label> -->
+              <input id="input-frequency-hours" type="number" class="validate" placeholder="0">
+            </div> hours
+            <div class="input-field inline">
+              <input id="input-frequency-minutes" type="number" class="validate" placeholder="0">
+            </div> Minutes
+          </div>
+        </div>
+        <button class="btn-flat grey lighten-3" type="submit">Submit</button>
+      </form>
+
+    </div>
+
+  </main>
 </body>
+
+<!-- Non-critical CSS -->
+<!-- To use the Materialize Icon Set as a Font -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </html>
