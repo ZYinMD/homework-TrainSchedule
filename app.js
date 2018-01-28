@@ -1,3 +1,12 @@
+$('#submit-new-line').on('click', constructNewLine);
+function constructNewLine() {
+  console.log('line name: ' + $('#input-line-name').val());
+  console.log('destination: ' + $('#input-destination').val());;
+  console.log('data: ' + $('#maiden-voyage-date').val());
+  console.log('time: ' + $('#maiden-voyage-time').val());
+  console.log('frequency hours: ' + $('#frequency__hours').val());
+  console.log('frequency minutes: ' + $('#frequency__minutes').val());
+}
 initializeFirebase();
 var defaultLines = [{
   lineName: "Southern Dream",

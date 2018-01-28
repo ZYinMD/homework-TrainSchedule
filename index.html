@@ -84,24 +84,25 @@
               </div>
               <p class="form-text">Maiden Voyage: The first train will depart at:</p>
               <div class="row">
-                <label for="maiden-voyage-date" class="col-2">Date: </label>
-                <input id="maiden-voyage-date" type="Date" class="form-control col-4">
-                <label for="maiden-voyage-time" class="col-2">Time: </label>
-                <input id="maiden-voyage-time" type="Time" class="form-control col-4">
+                <label for="maiden-voyage-date" class="input-group-text">Date: </label>
+                <input id="maiden-voyage-date" type="Date" class="form-control col">
+                <label for="maiden-voyage-time" class="input-group-text">Time: </label>
+
+                <input id="maiden-voyage-time" type="Time" class="form-control col">
               </div>
               <p class="form-text">Frequency: the train will run every</p>
               <div class="row">
-                <input id="frequency__hours" type="number" class="form-control col-4" placeholder="0">
-                <label for="frequency__hours" class="col-2">Hours and</label>
-                <input id="frequency__minutes" type="number" class="form-control col-4" placeholder="0">
-                <label for="frequency__minutes" class="col-2">Minutes</label>
+                <input id="frequency__hours" type="number" class="form-control col" placeholder="0">
+                <label for="frequency__hours" class="input-group-text">Hours and</label>
+                <input id="frequency__minutes" type="number" class="form-control col" placeholder="0">
+                <label for="frequency__minutes" class="input-group-text">Minutes</label>
               </div>
 
             </form>
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-light">Add</button>
+            <button type="button" id="submit-new-line" data-dismiss="modal" class="btn btn-light">Add</button>
           </div>
         </div>
       </div>
