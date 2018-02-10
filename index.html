@@ -25,7 +25,7 @@
   <!-- my own js -->
   <script defer src="app.js"></script>
 
-  <!-- Materialize stylesheet -->
+  <!-- Bootstrap stylesheet -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <!-- Your own stylesheet -->
@@ -57,7 +57,7 @@
         </tbody>
       </table>
     </div>
-    <div class="row"">
+    <div class="row">
       <div class="col" id="buttons">
         <button class="btn btn-light" type="button" id="reset">Reset to Default</button>
         <!-- Button trigger modal -->
@@ -100,11 +100,6 @@
                 <input id="maiden-voyage-date" type="Date" class="form-control col">
                 <label for="maiden-voyage-time" class="input-group-text">Departure time of the first train: </label>
                 <input id="maiden-voyage-time" type="Time" class="form-control col">
-                <script>
-                  let now = new Date();
-                  document.getElementById("maiden-voyage-date").value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
-                  document.getElementById("maiden-voyage-time").value = `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
-                </script>
               </div>
 
             </form>

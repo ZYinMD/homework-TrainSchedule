@@ -3,16 +3,7 @@ initializeFirebase();
 $('#reset').on('click', resetFirebase); //when "reset" button is clicked, reset Firebase to default
 firebase.database().ref('trainLines').on('value', updateData); //when Firebase detects any changes, update the local database
 $('#submit-new-line').on('click', submitNewLine); //when the 'add' button in the modal is clicked, add a new train line into Firebase
-function submitNewLine() { //this function gets value from the modal and add a push train line into Firebase
-  var newLine = {
-    lineName: $('#input-line-name').val(),
-    destination: $('#input-destination').val(),
-    maidenVoyageDate: $('#maiden-voyage-date').val(),
-    maidenVoyageTime: $('#maiden-voyage-time').val(),
-    frequency: $('#frequency__hours').val() + 'h' + $('#frequency__minutes').val() + 'm'
-  };
-  firebase.database().ref('trainLines').push(newLine);
-}
+defaultInputValue();//set the default value inside the modal to today. Unfortunately it can't be done in html.
 
 function updateData(snapshotFromFirebase) { //this function is triggered on Firebase change. It updates the LocalDB, as well as the display
   localDB = snapshotFromFirebase.val();
@@ -58,7 +49,7 @@ function refreshTimeTable() { //this function takes data from LocalDB and refres
       timeAway = timeAway.humanize();
       if (nextTrain.year() == now.getFullYear()) { //if next train is in this year
         nextTrain = nextTrain.format('MMM D h:mma');
-      } else { //if next train is not in this year
+      } else { //if next train is not in this year, show the year
         nextTrain = nextTrain.format('MMM D YYYY h:mma');
       }
     } else { //if timeAway < 1 day
@@ -69,14 +60,14 @@ function refreshTimeTable() { //this function takes data from LocalDB and refres
       } else { //only seconds away
         timeAway = timeAway.seconds() + 's';
       }
-      let isTomorrow = nextTrain.date() != now.getDate(); //although timeAway < 1 day, but is it tomorrow?
+      let isTomorrow = nextTrain.date() != now.getDate();
       if (nextTrain.minutes()) {
         nextTrain = nextTrain.format('h:mma'); //show minutes only when it's not 0, e.g. show 5pm instead of 5:00pm
       } else {
         nextTrain = nextTrain.format('ha');
       }
-      if (isTomorrow) {
-        nextTrain = 'tomorrow ' + nextTrain;
+      if (isTomorrow) { //although timeAway < 1 day, but is it today?
+        nextTrain = 'tomorrow ' + nextTrain; //say tomorrow if it's tomorrow
       }
     }
     newRow.append(`<td>${nextTrain}</td>)`);
@@ -84,6 +75,25 @@ function refreshTimeTable() { //this function takes data from LocalDB and refres
     $('#timetable__body').append(newRow); //finally done formatting the row, append it!
   }
 }
+
+function submitNewLine() { //this function gets value from the modal and add a push train line into Firebase
+  var newLine = {
+    lineName: $('#input-line-name').val(),
+    destination: $('#input-destination').val(),
+    maidenVoyageDate: $('#maiden-voyage-date').val(),
+    maidenVoyageTime: $('#maiden-voyage-time').val(),
+    frequency: $('#frequency__hours').val() + 'h' + $('#frequency__minutes').val() + 'm'
+  };
+  firebase.database().ref('trainLines').push(newLine);
+  setTimeout(defaultInputValue, 300); //reset default date and time value for next new train
+}
+
+function defaultInputValue() { //this function sets the default input value of date and time inside the modal to today and now
+  let now = new Date();
+  document.getElementById("maiden-voyage-date").value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0 ")}-${String(now.getDate()).padStart(2,"0 ")}`;
+  document.getElementById("maiden-voyage-time").value = `${String(now.getHours()).padStart(2,"0 ")}:${String(now.getMinutes()).padStart(2,"0 ")}`;
+}
+
 
 function resetFirebase() { //this function resets Firebase to the initial default value
   var defaultLines = [{
@@ -124,7 +134,7 @@ function resetFirebase() { //this function resets Firebase to the initial defaul
 }
 
 function initializeFirebase() {
-  var apiKey1stHalf = 'AIzaSyCZskGEWNvuDsAq';
+  var apiKey1stHalf = 'AIzaSyCZskGEWNvuDsAq'; //separate the key into 2 parts to avoid being stole by crawlers
   var apiKey2ndHalf = 'VEX_4CSxVOpAuGho0zg';
   var config = {
     apiKey: apiKey1stHalf + apiKey2ndHalf,

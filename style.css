@@ -1,15 +1,16 @@
 body {
   font-family: Arial;
-
 }
 
 header {
   text-align: center;
   margin: 2em auto 1.5em
 }
+
 #buttons {
   text-align: center;
 }
+
 th,
 td {
   text-align: center;
@@ -19,7 +20,6 @@ td:last-child {
   text-align: right;
   position: relative;
   right: 3em;
-
 }
 
 #frequency__hours,
@@ -30,7 +30,6 @@ td:last-child {
 #frequency__minutes__label,
 #maiden-voyage-time {
   margin-right: 1em;
-
 }
 
 .form-text {
