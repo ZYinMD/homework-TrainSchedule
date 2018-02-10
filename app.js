@@ -1,11 +1,9 @@
-
-
 var localDB;
 initializeFirebase();
 $('#reset').on('click', resetFirebase); //when "reset" button is clicked, reset Firebase to default
-$('#submit-new-line').on('click', submitNewLine); //when the 'add' button in the modal is clicked, add a new train line into Firebase
 firebase.database().ref('trainLines').on('value', updateData); //when Firebase detects any changes, update the local database
-function submitNewLine() {
+$('#submit-new-line').on('click', submitNewLine); //when the 'add' button in the modal is clicked, add a new train line into Firebase
+function submitNewLine() { //this function gets value from the modal and add a push train line into Firebase
   var newLine = {
     lineName: $('#input-line-name').val(),
     destination: $('#input-destination').val(),
@@ -18,36 +16,36 @@ function submitNewLine() {
 
 function updateData(snapshotFromFirebase) { //this function is triggered on Firebase change. It updates the LocalDB, as well as the display
   localDB = snapshotFromFirebase.val();
-  updateTimes();
-  setInterval(updateTimes, 1000)
+  setInterval(refreshTimeTable, 1000); //update the display every second with local data
+  refreshTimeTable(); //manually call it once first, because the setInterval doesn't fire immediately
 }
 
-function updateTimes() { //this function takes data from LocalDB and refresh the timetable on display
-  $('#timetable__body').empty(); //clear current display
-  for (let i in localDB) {
+function refreshTimeTable() { //this function takes data from LocalDB and refresh the timetable on display
+  $('#timetable__body').empty(); //clear current display and redraw the whole thing. It's not as fast as only updating the cells that need update, but it's easier to write
+  for (let i in localDB) { //each i is a train line
     let newRow = $('<tr>'); //create a new row in the table, and start appending cells
     newRow.append(`<td>${localDB[i].lineName}</td>)`);
     newRow.append(`<td>${localDB[i].destination}</td>)`);
     newRow.append(`<td>${localDB[i].frequency}</td>)`);
-    //construct a js date object of the start time of the first train
+    //construct a js date object containing the start time of the first train
     let maidenDate = localDB[i].maidenVoyageDate.split('-');
     maidenDate[1] -= 1; //minus the month by 1, because months count from 0 to 11 in the js date object
     let maidenTime = localDB[i].maidenVoyageTime.split(':');
     let maidenVoyage = new Date(...maidenDate, ...maidenTime);
     //compare the maidenVoyage with now
     let now = new Date();
-    // the following big chunk of code is to get calculate two key values, nextTrian (in a js date object), and timeAway (in milliseconds)
+    // the following big chunk of code is to calculate two key values: nextTrian (a js date object), and timeAway (integer of milliseconds)
     let nextTrain, timeAway, interval, intervalH, intervalM
     if (now < maidenVoyage) { //if maiden voyage is after now, just calculate how soon
       timeAway = maidenVoyage - now;
       nextTrain = maidenVoyage;
     } else { //if maiden voyage is before now, we're currently in between two trains
       interval = localDB[i].frequency;
-      if (interval.includes('h')) {
+      if (interval.includes('h')) { //if over an hour
         intervalH = interval.slice(0, interval.indexOf('h'));
         intervalM = interval.slice(interval.indexOf('h') + 1, -1);
         interval = intervalH * 60 * 60 * 1000 + intervalM * 60 * 1000;
-      } else {
+      } else { //if less than an hour
         intervalM = interval.slice(0, -1);
         interval = intervalM * 60 * 1000;
       }
@@ -58,7 +56,7 @@ function updateTimes() { //this function takes data from LocalDB and refresh the
     nextTrain = moment(nextTrain);
     if (timeAway > 60 * 60 * 24 * 1000) { //if timeAway > 1 day
       timeAway = timeAway.humanize();
-      if (nextTrain.getFullYear() == now.getFullYear()) { //if next train is in this year
+      if (nextTrain.year() == now.getFullYear()) { //if next train is in this year
         nextTrain = nextTrain.format('MMM D h:mma');
       } else { //if next train is not in this year
         nextTrain = nextTrain.format('MMM D YYYY h:mma');
@@ -68,8 +66,8 @@ function updateTimes() { //this function takes data from LocalDB and refresh the
         timeAway = `${timeAway.hours()}:${String(timeAway.minutes()).padStart(2, '0')}:${String(timeAway.seconds()).padStart(2, '0')}` //sometimes minutes and seconds are in single digit when < 10, pad it
       } else if (timeAway.minutes()) { //if minutes > 0
         timeAway = `${timeAway.minutes()}:${String(timeAway.seconds()).padStart(2, '0')}`
-      } else {
-        timeAway = String(timeAway.seconds()).padStart(2, '0')
+      } else { //only seconds away
+        timeAway = timeAway.seconds() + 's';
       }
       let isTomorrow = nextTrain.date() != now.getDate(); //although timeAway < 1 day, but is it tomorrow?
       if (nextTrain.minutes()) {
@@ -93,7 +91,7 @@ function resetFirebase() { //this function resets Firebase to the initial defaul
     destination: "1101 K St NW",
     maidenVoyageDate: "2017-11-07",
     maidenVoyageTime: "18:30",
-    frequency: "5m"
+    frequency: "7m"
   }, {
     lineName: "Southern Dream",
     destination: "Sydney",
