@@ -101,7 +101,7 @@ function resetFirebase() { //this function resets Firebase to the initial defaul
     destination: "1101 K St NW",
     maidenVoyageDate: "2017-11-07",
     maidenVoyageTime: "18:30",
-    frequency: "7m"
+    frequency: "3m"
   }, {
     lineName: "Southern Dream",
     destination: "Sydney",
