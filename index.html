@@ -35,11 +35,13 @@
 <body>
   <main class="container">
     <div class="row">
-      <h1>Platform Z - Timetable</h1>
+      <header class="col">
+        <h1>Platform Z - Timetable</h1>
+      </header>
     </div>
 
     <div class="row">
-      <table class="table">
+      <table align="right" class="table">
         <thead>
           <tr>
             <th>Line Name</th>
@@ -55,12 +57,15 @@
         </tbody>
       </table>
     </div>
-
-    <button class="btn btn-light" type="button" id="reset">Reset to Default</button>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#new-train">
-      Add a New Line
-    </button>
+    <div class="row"">
+      <div class="col" id="buttons">
+        <button class="btn btn-light" type="button" id="reset">Reset to Default</button>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-light" data-toggle="modal" data-target="#new-train">
+          Add a New Line
+        </button>
+      </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="new-train" tabindex="-1" role="dialog" aria-labelledby="new-train__header" aria-hidden="true">
