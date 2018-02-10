@@ -9,7 +9,6 @@ header {
 }
 #buttons {
   text-align: center;
-
 }
 th,
 td {
@@ -21,4 +20,20 @@ td:last-child {
   position: relative;
   right: 3em;
 
+}
+
+#frequency__hours,
+#maiden-voyage-date__label {
+  margin-left: 1em;
+}
+
+#frequency__minutes__label,
+#maiden-voyage-time {
+  margin-right: 1em;
+
+}
+
+.form-text {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
 }

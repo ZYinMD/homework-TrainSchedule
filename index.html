@@ -72,7 +72,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <p class="modal-title" id="new-train__header">Add a New Line</p>
+            <h2 class="modal-title" id="new-train__header">Add a New Line</h2>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -87,20 +87,24 @@
                 <label for="input-destination">Destination</label>
                 <input id="input-destination" class="form-control" type="text">
               </div>
-              <p class="form-text">Maiden Voyage: The first train will depart at:</p>
-              <div class="row">
-                <label for="maiden-voyage-date" class="input-group-text">Date: </label>
-                <input id="maiden-voyage-date" type="Date" class="form-control col">
-                <label for="maiden-voyage-time" class="input-group-text">Time: </label>
-
-                <input id="maiden-voyage-time" type="Time" class="form-control col">
-              </div>
               <p class="form-text">Frequency: the train will run every</p>
               <div class="row">
                 <input id="frequency__hours" type="number" class="form-control col" placeholder="0">
                 <label for="frequency__hours" class="input-group-text">Hours and</label>
-                <input id="frequency__minutes" type="number" class="form-control col" placeholder="0">
-                <label for="frequency__minutes" class="input-group-text">Minutes</label>
+                <input id="frequency__minutes" type="number" class="form-control col" placeholder="20">
+                <label id="frequency__minutes__label" for="frequency__minutes" class="input-group-text">Minutes</label>
+              </div>
+              <p class="form-text">Maiden Voyage: The first train will depart at:</p>
+              <div class="row">
+                <label id="maiden-voyage-date__label" for="maiden-voyage-date" class="input-group-text">Date of the first train: </label>
+                <input id="maiden-voyage-date" type="Date" class="form-control col">
+                <label for="maiden-voyage-time" class="input-group-text">Departure time of the first train: </label>
+                <input id="maiden-voyage-time" type="Time" class="form-control col">
+                <script>
+                  let now = new Date();
+                  document.getElementById("maiden-voyage-date").value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+                  document.getElementById("maiden-voyage-time").value = `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+                </script>
               </div>
 
             </form>

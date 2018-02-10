@@ -1,3 +1,5 @@
+
+
 var localDB;
 initializeFirebase();
 $('#reset').on('click', resetFirebase); //when "reset" button is clicked, reset Firebase to default
